@@ -46,7 +46,7 @@ export default function ProgressDisplay({
       {/* Header with count */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Your Reading Stack</h3>
-        <span className="text-2xl font-bold tabular-nums">
+        <span className="text-lg font-bold">
           {completed} / {goal}
         </span>
       </div>

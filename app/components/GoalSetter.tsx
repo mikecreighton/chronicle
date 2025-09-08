@@ -15,7 +15,7 @@ function currentSchoolYear(date = new Date()): string {
   return `${year - 1}-${year}`;
 }
 
-export default function GoalSetter() {
+export default function GoalSetter({ onSave }: { onSave?: () => void }) {
   const settings = useQuery(api.settings.getSettings);
   const upsert = useMutation(api.settings.upsertSettings);
 
@@ -32,36 +32,48 @@ export default function GoalSetter() {
   const canSave = typeof goal === "number" && goal > 0 && schoolYear.length > 0;
 
   return (
-    <div className="card flex flex-col gap-3">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 sm:items-center">
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium opacity-80">School Year</label>
+        <label className="text-sm font-bold opacity-80 min-w-[80px]">School Year</label>
         <input
           value={schoolYear}
           onChange={(e) => setSchoolYear(e.target.value)}
-          className="px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-36 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
+          className="px-2 py-1.5 rounded-md bg-white dark:bg-slate-800 text-foreground border border-slate-300 dark:border-slate-700 text-sm w-32 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
+          placeholder="2024-2025"
         />
       </div>
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium opacity-80">Yearly Goal</label>
+        <label className="text-sm font-bold opacity-80 min-w-[80px]">Reading Goal</label>
         <input
           type="number"
           min={1}
+          max={20}
           value={goal}
-          onChange={(e) => setGoal(e.target.value === "" ? "" : Number(e.target.value))}
-          className="px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-28 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
-        />
-        <button
-          className="btn-primary"
-          disabled={!canSave}
-          onClick={() => {
-            if (typeof goal === "number") {
-              void upsert({ yearGoal: goal, schoolYear });
+          onChange={(e) => {
+            const value = e.target.value === "" ? "" : Number(e.target.value);
+            if (typeof value === "number") {
+              setGoal(Math.min(20, Math.max(1, value)));
+            } else {
+              setGoal("");
             }
           }}
-        >
-          Save Goal
-        </button>
+          className="px-2 py-1.5 rounded-md bg-white dark:bg-slate-800 text-foreground border border-slate-300 dark:border-slate-700 text-sm w-14 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
+          placeholder="20"
+        />
+        <span className="text-sm opacity-60">books</span>
       </div>
+      <button
+        className="btn-primary ml-auto"
+        disabled={!canSave}
+        onClick={() => {
+          if (typeof goal === "number") {
+            void upsert({ yearGoal: goal, schoolYear });
+            onSave?.();
+          }
+        }}
+      >
+        Save Settings
+      </button>
     </div>
   );
 }
