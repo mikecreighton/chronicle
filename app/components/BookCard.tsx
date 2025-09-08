@@ -43,7 +43,7 @@ export default function BookCard({
       <div className="flex items-center gap-3 min-w-0">
         <button
           aria-label="Drag to reorder"
-          className="p-1 rounded hover:bg-slate-300 dark:hover:bg-slate-700 cursor-grab select-none"
+          className="p-1 rounded hover:bg-slate-300 dark:hover:bg-slate-700 cursor-grab select-none touch-none"
           {...(dragHandleProps?.attributes || {})}
           {...(dragHandleProps?.listeners || {})}
         >

@@ -5,8 +5,21 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import DraggableBook from "./DraggableBook";
 import EmptySlot from "./EmptySlot";
-import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  DndContext,
+  DragEndEvent,
+  MouseSensor,
+  TouchSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
 
 export default function BookList() {
   const serverBooks = useQuery(api.books.list) ?? [];
@@ -58,9 +71,12 @@ export default function BookList() {
   const goal = settings?.yearGoal ?? 0;
   const placeholders = Math.max(0, goal - ordered.length);
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: { distance: 8 },
-    })
+    // Mouse: small distance to avoid accidental drags
+    useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
+    // Touch: press and hold before drag, small tolerance for jitter
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 8 } }),
+    // Keyboard: a11y support
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
   function onDragStart() {
