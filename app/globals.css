@@ -132,3 +132,25 @@ body {
 @utility badge-reading { @apply badge; background-color: color-mix(in oklab, var(--accent-reading) 25%, transparent); color: white; }
 @utility badge-completed { @apply badge; background-color: color-mix(in oklab, var(--accent-completed) 30%, transparent); color: white; }
 @utility badge-planned { @apply badge; background-color: color-mix(in oklab, var(--accent-planned) 25%, transparent); color: white; }
+
+/* Book stack animation */
+@keyframes bookSlide {
+  0% {
+    transform: translateY(-50px) scale(1.2);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0) scale(1.1);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-bookSlide {
+  animation: bookSlide 0.6s ease-out;
+}
