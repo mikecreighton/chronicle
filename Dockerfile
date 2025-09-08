@@ -2,6 +2,9 @@
 
 FROM node:20-alpine AS base
 
+ARG NEXT_PUBLIC_CONVEX_URL=${NEXT_PUBLIC_CONVEX_URL}
+ARG CONVEX_DEPLOY_KEY=${CONVEX_DEPLOY_KEY}
+
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -26,6 +29,7 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
+
 
 RUN \
   if [ -f package-lock.json ]; then npx convex deploy --cmd 'npm run build'; \
