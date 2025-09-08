@@ -42,9 +42,9 @@ export default function ProgressDisplay({
   };
 
   return (
-    <div className="card flex flex-col gap-4">
+    <div className="card flex flex-col gap-4 pb-8">
       {/* Header with count */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold">Your Reading Stack</h3>
         <span className="text-2xl font-bold tabular-nums">
           {completed} / {goal}
@@ -52,10 +52,10 @@ export default function ProgressDisplay({
       </div>
       
       {/* Milestone message */}
-      <p className="text-sm text-center opacity-80">{getMilestoneMessage()}</p>
+      <p className="text-lg text-center opacity-80">{getMilestoneMessage()}</p>
       
       {/* Stacked books visualization */}
-      <div className="relative h-40 px-4">
+      <div className="relative h-32 px-4 mb-2">
         {/* Bookshelf */}
         <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-t from-slate-400/20 to-slate-300/10 dark:from-slate-600/30 dark:to-slate-700/20 rounded-sm" />
         
