@@ -11,8 +11,9 @@ This repository contains Chronicle — a simple, single‑page dashboard for tra
 
 ## Build, Test, and Development Commands
 - `npm install`: Install dependencies.
-- `npm run dev`: Start Next.js dev server.
-- `npx convex dev`: Run Convex locally for real‑time data.
+- `npm run dev`: Start Next.js dev server AND Convex dev server in parallel.
+- `npm run dev:frontend`: Start Next.js dev server.
+- `npx run dev:backend`: Run Convex dev server locally.
 - `npm run build` / `npm start`: Production build and serve (add when app is scaffolded).
 - `npm run lint` / `npm run typecheck`: Lint and TypeScript checks (add when configured).
 
