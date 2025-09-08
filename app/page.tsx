@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 bg-background/95 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+      <header className="sticky top-0 z-21 bg-background/95 backdrop-blur border-b border-slate-200 dark:border-slate-800">
         <div className="px-4 py-3 flex flex-row justify-between items-center">
           <div className="flex items-baseline gap-4">
             <h1 className="text-lg sm:text-xl font-bold tracking-tight flex items-center gap-2">

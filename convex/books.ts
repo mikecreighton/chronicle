@@ -92,3 +92,13 @@ export const reorder = mutation({
     }
   },
 });
+
+export const clearAll = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const allBooks = await ctx.db.query("books").collect();
+    for (const book of allBooks) {
+      await ctx.db.delete(book._id);
+    }
+  },
+});
