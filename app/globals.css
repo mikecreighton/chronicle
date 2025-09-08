@@ -78,9 +78,11 @@ body {
 @utility book-card {
   @apply card flex items-center justify-between rounded-2xl p-4 transition-all overflow-hidden;
   position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 @utility book--planned {
   --book-accent: var(--accent-planned);
+  opacity: 0.85;
 }
 @utility book--reading {
   --book-accent: var(--accent-reading);
@@ -94,6 +96,7 @@ body {
     linear-gradient(90deg, color-mix(in oklab, var(--book-accent) 14%, transparent) 0%, transparent 22%),
     var(--surface);
   border-color: color-mix(in oklab, var(--book-accent) 28%, rgb(51 65 85 / 0.35));
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 .dark .book-card {
   background:
@@ -108,8 +111,22 @@ body {
   width: 6px;
   background: linear-gradient(180deg, color-mix(in oklab, var(--book-accent) 65%, white) 0%, var(--book-accent) 100%);
   opacity: 0.9;
+  transition: background 0.3s ease, width 0.3s ease;
 }
-.book-card:hover { filter: saturate(1.1); }
+.book-card:hover { 
+  filter: saturate(1.15);
+}
+.book-card:hover::before {
+  width: 8px;
+}
+
+/* Special states */
+.book--reading {
+  box-shadow: 0 0 20px color-mix(in oklab, var(--accent-reading) 15%, transparent);
+}
+.book--completed {
+  position: relative;
+}
 
 /* Status badges tied to the palette */
 @utility badge-reading { @apply badge; background-color: color-mix(in oklab, var(--accent-reading) 25%, transparent); color: white; }
