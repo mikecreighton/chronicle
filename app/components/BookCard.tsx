@@ -27,18 +27,15 @@ export default function BookCard({
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState(book.title);
 
-  const statusColor =
-    book.status === "completed"
-      ? "bg-emerald-600/10 text-emerald-900 dark:text-emerald-100 border border-emerald-500/20 hover:border-emerald-500/40"
-      : book.status === "reading"
-      ? "bg-sky-600/10 text-sky-900 dark:text-sky-100 border border-sky-500/20 hover:border-sky-500/40"
-      : "bg-[var(--surface)] text-foreground border border-slate-200 dark:border-slate-800 hover:border-slate-600/40";
-
   return (
     <div
-      className={`rounded-xl p-4 flex items-center justify-between transition-colors ${statusColor} ${
-        dragging ? "ring-2 ring-sky-400" : ""
-      }`}
+      className={`book-card ${
+        book.status === "completed"
+          ? "book--completed"
+          : book.status === "reading"
+          ? "book--reading"
+          : "book--planned"
+      } ${dragging ? "ring-2 ring-sky-400/70" : ""}`}
     >
       <div className="flex items-center gap-3 min-w-0">
         <button
@@ -82,12 +79,17 @@ export default function BookCard({
           />
         ) : (
           <button
-            className="text-left truncate max-w-[22rem] text-base font-medium"
+            className="text-left truncate max-w-[22rem] text-base sm:text-lg font-medium"
             title="Click to edit title"
             onClick={() => setEditing(true)}
           >
             {book.title || <span className="opacity-60">Untitled book</span>}
           </button>
+        )}
+        {book.status !== "planned" && (
+          <span className={`${
+            book.status === "completed" ? "badge-completed" : "badge-reading"
+          } ml-2`}>{book.status === "completed" ? "Completed" : "Reading"}</span>
         )}
       </div>
       <div className="flex items-center gap-2">

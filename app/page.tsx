@@ -15,7 +15,10 @@ export default function Home() {
   return (
     <>
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-row justify-between items-center">
-        <h1 className="text-lg sm:text-xl font-bold tracking-tight">Chronicle</h1>
+        <h1 className="text-lg sm:text-xl font-bold tracking-tight flex items-center gap-2">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-[--accent-primary]"></span>
+          Chronicle
+        </h1>
         <span className="text-xs sm:text-sm opacity-70">Book reading tracker</span>
       </header>
       <main className="p-6 max-w-6xl mx-auto">

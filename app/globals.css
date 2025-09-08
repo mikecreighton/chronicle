@@ -5,6 +5,10 @@
   --foreground: #171717;
   --surface: #f8fafc;
   --surface-muted: #eef2f7;
+  --accent-primary: #7c6fff; /* indigo */
+  --accent-reading: #38bdf8; /* sky 400 */
+  --accent-completed: #22c55e; /* emerald 500 */
+  --accent-planned: #94a3b8; /* slate 400 */
 }
 
 @theme inline {
@@ -20,12 +24,19 @@
     --foreground: #ededed;
     --surface: #0f172a;
     --surface-muted: #0b1220;
+    --accent-primary: #7c6fff;
+    --accent-reading: #0ea5e9; /* sky 500 */
+    --accent-completed: #22c55e; /* emerald 500 */
+    --accent-planned: #64748b; /* slate 500 */
   }
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background:
+    radial-gradient(1200px 800px at -10% -10%, color-mix(in oklab, var(--accent-primary) 10%, transparent), transparent),
+    radial-gradient(900px 600px at 110% 10%, color-mix(in oklab, var(--accent-reading) 10%, transparent), transparent),
+    var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -48,3 +59,45 @@ body {
 @utility badge {
   @apply inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border border-slate-300/60 dark:border-slate-700/60 bg-slate-200/60 dark:bg-slate-800/60;
 }
+
+/* Book card styling with a playful "spine" accent */
+@utility book-card {
+  @apply card flex items-center justify-between rounded-2xl p-4 transition-colors overflow-hidden;
+  position: relative;
+}
+@utility book--planned {
+  --book-accent: var(--accent-planned);
+}
+@utility book--reading {
+  --book-accent: var(--accent-reading);
+}
+@utility book--completed {
+  --book-accent: var(--accent-completed);
+}
+
+.book-card {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--book-accent) 12%, transparent) 0%, transparent 22%),
+    var(--surface);
+  border-color: color-mix(in oklab, var(--book-accent) 18%, rgb(51 65 85 / 0.35));
+}
+.dark .book-card {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--book-accent) 18%, transparent) 0%, transparent 24%),
+    color-mix(in oklab, var(--surface) 92%, black);
+  border-color: color-mix(in oklab, var(--book-accent) 30%, rgb(30 41 59 / 0.45));
+}
+.book-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 8px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--book-accent) 55%, white) 0%, var(--book-accent) 100%);
+  opacity: 0.9;
+}
+.book-card:hover { filter: saturate(1.1); }
+
+/* Status badges tied to the palette */
+@utility badge-reading { @apply badge; background-color: color-mix(in oklab, var(--accent-reading) 25%, transparent); color: white; }
+@utility badge-completed { @apply badge; background-color: color-mix(in oklab, var(--accent-completed) 30%, transparent); color: white; }
+@utility badge-planned { @apply badge; background-color: color-mix(in oklab, var(--accent-planned) 25%, transparent); color: white; }
