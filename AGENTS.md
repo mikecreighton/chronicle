@@ -20,7 +20,7 @@ This repository contains Chronicle — a simple, single‑page dashboard for tra
 - **Language**: TypeScript; **indent**: 2 spaces.
 - **Components**: React Server/Client Components as appropriate; filenames in `PascalCase.tsx` (routes use `page.tsx`).
 - **State**: Prefer Convex mutations/queries; keep components pure and focused.
-- **Styling**: Tailwind CSS; compose utility classes; avoid inline styles.
+- **Styling**: Tailwind CSS v4; compose utility classes; avoid inline styles.
 - **Formatting/Linting**: Prettier + ESLint (recommended rules); sort imports; consistent Tailwind class order.
 
 ## Testing Guidelines

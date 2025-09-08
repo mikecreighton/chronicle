@@ -12,7 +12,7 @@ More detailed overview here: @spec/overview.md
 
 - **Framework**: Next.js 14+ with App Router
 - **Database**: Convex (real-time sync, no API routes needed)
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS v4
 - **Deployment Target**: Vercel or self-hosted server
 
 ## Architecture Decisions
