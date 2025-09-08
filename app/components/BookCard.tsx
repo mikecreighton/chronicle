@@ -30,10 +30,12 @@ export default function BookCard({
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
   const contextMenuRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const [isLongPress, setIsLongPress] = useState(false);
 
   // Cycle through book statuses
   const cycleStatus = () => {
-    if (editing) return; // Don't cycle when editing title
+    if (editing || isLongPress) return; // Don't cycle when editing title or after long press
     
     const statusOrder: Array<"planned" | "reading" | "completed"> = ["planned", "reading", "completed"];
     const currentIndex = statusOrder.indexOf(book.status);
@@ -41,11 +43,44 @@ export default function BookCard({
     update({ id: book._id as any, status: nextStatus });
   };
 
-  // Handle context menu
+  // Handle context menu (desktop)
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setContextMenuPosition({ x: e.clientX, y: e.clientY });
     setShowContextMenu(true);
+  };
+
+  // Handle long press (mobile)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setIsLongPress(false);
+    
+    longPressTimer.current = setTimeout(() => {
+      setIsLongPress(true);
+      setContextMenuPosition({ x: touch.clientX, y: touch.clientY });
+      setShowContextMenu(true);
+      // Haptic feedback if available
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    }, 500); // 500ms for long press
+  };
+
+  const handleTouchEnd = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    // Reset isLongPress after a short delay to prevent click
+    setTimeout(() => setIsLongPress(false), 100);
+  };
+
+  const handleTouchMove = () => {
+    // Cancel long press if user moves finger
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
   };
 
   // Close context menu when clicking outside
@@ -81,9 +116,12 @@ export default function BookCard({
             : book.status === "reading"
             ? "book--reading"
             : "book--planned"
-        } ${dragging ? "ring-2 ring-[var(--accent-primary)]" : ""} cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]`}
+        } ${dragging ? "ring-2 ring-[var(--accent-primary)]" : ""} cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] select-none`}
         onClick={cycleStatus}
         onContextMenu={handleContextMenu}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
       >
         <div className="flex items-center gap-3 min-w-0">
           <button
@@ -161,8 +199,11 @@ export default function BookCard({
       {showContextMenu && (
         <div
           ref={contextMenuRef}
-          className="fixed z-50 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[120px]"
-          style={{ left: contextMenuPosition.x, top: contextMenuPosition.y }}
+          className="fixed z-50 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[140px]"
+          style={{ 
+            left: Math.min(contextMenuPosition.x, window.innerWidth - 160),
+            top: Math.min(contextMenuPosition.y, window.innerHeight - 100)
+          }}
         >
           <button
             className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
