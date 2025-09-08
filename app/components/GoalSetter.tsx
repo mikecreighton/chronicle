@@ -38,7 +38,7 @@ export default function GoalSetter() {
         <input
           value={schoolYear}
           onChange={(e) => setSchoolYear(e.target.value)}
-          className="px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-sm w-32"
+          className="px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-32"
         />
       </div>
       <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export default function GoalSetter() {
           min={1}
           value={goal}
           onChange={(e) => setGoal(e.target.value === "" ? "" : Number(e.target.value))}
-          className="px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-sm w-24"
+          className="px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-24"
         />
         <button
           className="text-xs px-2 py-1 rounded bg-foreground text-background disabled:opacity-50"

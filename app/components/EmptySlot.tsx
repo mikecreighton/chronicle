@@ -23,7 +23,7 @@ export default function EmptySlot() {
   return (
     <div className="rounded-md p-3 border border-slate-300 dark:border-slate-700 flex items-center gap-2">
       <input
-        className="flex-1 px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-sm"
+        className="flex-1 px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base"
         value={title}
         placeholder="Book title"
         onChange={(e) => setTitle(e.target.value)}
@@ -65,4 +65,3 @@ export default function EmptySlot() {
     </div>
   );
 }
-

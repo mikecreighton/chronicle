@@ -62,7 +62,7 @@ export default function BookCard({
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="px-2 py-1 rounded border border-slate-300 dark:border-slate-700 bg-background text-foreground text-sm min-w-0 w-56"
+            className="px-2 py-1 rounded border border-slate-300 dark:border-slate-700 bg-background text-foreground text-base min-w-0 w-56"
             placeholder="Book title"
             autoFocus
             onKeyDown={async (e) => {
