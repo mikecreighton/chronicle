@@ -12,7 +12,7 @@ export default function EmptySlot() {
   if (!adding) {
     return (
       <button
-        className="rounded-md border-2 border-dashed border-slate-300 dark:border-slate-700 p-4 text-slate-500 hover:text-foreground hover:border-slate-400 dark:hover:border-slate-600 text-sm"
+        className="rounded-xl border-2 border-dashed border-slate-300/60 dark:border-slate-700/60 p-4 text-slate-500 hover:text-foreground hover:border-slate-400 dark:hover:border-slate-500 text-sm bg-[var(--surface-muted)]/30 dark:bg-[var(--surface-muted)]/40"
         onClick={() => setAdding(true)}
       >
         + Add book
@@ -21,9 +21,9 @@ export default function EmptySlot() {
   }
 
   return (
-    <div className="rounded-md p-3 border border-slate-300 dark:border-slate-700 flex items-center gap-2">
+    <div className="card flex items-center gap-2">
       <input
-        className="flex-1 px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base"
+        className="flex-1 px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base focus:outline-none focus:ring-2 focus:ring-sky-500/60"
         value={title}
         placeholder="Book title"
         onChange={(e) => setTitle(e.target.value)}
@@ -41,7 +41,7 @@ export default function EmptySlot() {
         }}
       />
       <button
-        className="text-xs px-2 py-1 rounded bg-foreground text-background"
+        className="btn-primary"
         disabled={title.trim().length === 0}
         onClick={async () => {
           if (title.trim()) {
@@ -54,7 +54,7 @@ export default function EmptySlot() {
         Add
       </button>
       <button
-        className="text-xs px-2 py-1 rounded bg-slate-300 dark:bg-slate-700"
+        className="btn-muted"
         onClick={() => {
           setTitle("");
           setAdding(false);

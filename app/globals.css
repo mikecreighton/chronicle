@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --surface: #f8fafc;
+  --surface-muted: #eef2f7;
 }
 
 @theme inline {
@@ -16,6 +18,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --surface: #0f172a;
+    --surface-muted: #0b1220;
   }
 }
 
@@ -23,4 +27,24 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Design tokens and small utility layer */
+@utility card {
+  @apply rounded-xl border border-slate-200/60 dark:border-slate-800/60 bg-[var(--surface)] dark:bg-slate-900/40 p-4 shadow-sm;
+}
+@utility btn {
+  @apply inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+@utility btn-primary {
+  @apply btn bg-sky-600 text-white hover:bg-sky-500;
+}
+@utility btn-muted {
+  @apply btn bg-slate-200 text-slate-900 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600;
+}
+@utility btn-danger {
+  @apply btn bg-rose-600 text-white hover:bg-rose-500;
+}
+@utility badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border border-slate-300/60 dark:border-slate-700/60 bg-slate-200/60 dark:bg-slate-800/60;
 }

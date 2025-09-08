@@ -32,26 +32,26 @@ export default function GoalSetter() {
   const canSave = typeof goal === "number" && goal > 0 && schoolYear.length > 0;
 
   return (
-    <div className="flex flex-col gap-2 bg-slate-200 dark:bg-slate-800 p-4 rounded-md">
+    <div className="card flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium">School Year</label>
+        <label className="text-sm font-medium opacity-80">School Year</label>
         <input
           value={schoolYear}
           onChange={(e) => setSchoolYear(e.target.value)}
-          className="px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-32"
+          className="px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-36 focus:outline-none focus:ring-2 focus:ring-sky-500/60"
         />
       </div>
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium">Yearly Goal</label>
+        <label className="text-sm font-medium opacity-80">Yearly Goal</label>
         <input
           type="number"
           min={1}
           value={goal}
           onChange={(e) => setGoal(e.target.value === "" ? "" : Number(e.target.value))}
-          className="px-2 py-1 rounded bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-24"
+          className="px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base w-28 focus:outline-none focus:ring-2 focus:ring-sky-500/60"
         />
         <button
-          className="text-xs px-2 py-1 rounded bg-foreground text-background disabled:opacity-50"
+          className="btn-primary"
           disabled={!canSave}
           onClick={() => {
             if (typeof goal === "number") {
