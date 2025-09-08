@@ -6,11 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Chronicle is a single-page dashboard for tracking book-reading progress throughout the school year. Built for simplicity and speed, designed for a young reader to visually track their progress toward their yearly reading goal.
 
-More detailed overview here: @spec/overview.md
-
 ## Tech Stack
 
-- **Framework**: Next.js 14+ with App Router
+- **Framework**: Next.js 15+ with App Router
 - **Database**: Convex (real-time sync, no API routes needed)
 - **Styling**: Tailwind CSS v4
 - **Deployment Target**: Vercel or self-hosted server
@@ -77,13 +75,11 @@ settings: {
 ```bash
 # Setup (once these are configured)
 npm install
-npm run dev          # Start Next.js dev server
-npx convex dev       # Start Convex in dev mode
-
-# Future commands to be added:
-# npm run build       # Production build
-# npm run lint        # Linting
-# npm run typecheck   # Type checking
+npm run dev         # Start Next.js dev server + Convex dev server
+npx convex dev      # Start Convex deve server
+npx convex deploy   # Deploy Convex code to production 
+npm run build       # Production build
+npm run lint        # Linting
 ```
 
 ## Implementation Strategy

@@ -6,10 +6,6 @@ import { v } from "convex/values";
 // app will continue to work.
 // The schema provides more precise TypeScript types.
 export default defineSchema({
-  // Demo table from the quickstart (kept to avoid breaking example routes)
-  numbers: defineTable({
-    value: v.number(),
-  }),
 
   // Chronicle: list of books with simple status workflow
   books: defineTable({
