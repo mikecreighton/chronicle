@@ -61,7 +61,7 @@ export default function Home() {
         {/* Collapsible settings panel */}
         <div className={`
           overflow-hidden transition-all duration-300 ease-in-out
-          ${showSettings ? 'max-h-40' : 'max-h-0'}
+          ${showSettings ? 'max-h-max sm:max-h-40' : 'max-h-0'}
         `}>
           <div className="px-4 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
             <GoalSetter onSave={() => setShowSettings(false)} />

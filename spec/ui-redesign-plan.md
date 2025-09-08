@@ -114,11 +114,6 @@ Expanded Panel (on demand):
    - Progress bar fills with wave animation
    - "Great job!" toast notification
 
-3. **Drag & drop** (if not implemented):
-   - Ghost image while dragging
-   - Drop zones highlight
-   - Smooth reorder animations
-
 #### Empty States
 - Friendly placeholder for no books: "Add your first book!"
 - Encouraging messages based on progress
