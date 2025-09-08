@@ -13,7 +13,15 @@ type Book = {
   completedAt?: number;
 };
 
-export default function BookCard({ book }: { book: Book }) {
+export default function BookCard({
+  book,
+  dragHandleProps,
+  dragging,
+}: {
+  book: Book;
+  dragHandleProps?: { attributes?: any; listeners?: any };
+  dragging?: boolean;
+}) {
   const update = useMutation(api.books.update);
   const remove = useMutation(api.books.remove);
   const [editing, setEditing] = useState(false);
@@ -27,8 +35,20 @@ export default function BookCard({ book }: { book: Book }) {
       : "bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100";
 
   return (
-    <div className={`rounded-md p-4 flex items-center justify-between ${statusColor}`}>
+    <div
+      className={`rounded-md p-4 flex items-center justify-between ${statusColor} ${
+        dragging ? "ring-2 ring-sky-400" : ""
+      }`}
+    >
       <div className="flex items-center gap-3 min-w-0">
+        <button
+          aria-label="Drag to reorder"
+          className="p-1 rounded hover:bg-slate-300 dark:hover:bg-slate-700 cursor-grab select-none"
+          {...(dragHandleProps?.attributes || {})}
+          {...(dragHandleProps?.listeners || {})}
+        >
+          <span className="text-slate-600 dark:text-slate-300">⠿</span>
+        </button>
         <span
           className={`inline-block h-2.5 w-2.5 rounded-full ${
             book.status === "completed"
@@ -105,4 +125,3 @@ export default function BookCard({ book }: { book: Book }) {
     </div>
   );
 }
-

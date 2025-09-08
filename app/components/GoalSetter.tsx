@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function currentSchoolYear(date = new Date()): string {
   // School year: Aug 1 -> next Jul 31
@@ -21,18 +21,13 @@ export default function GoalSetter() {
 
   const defaultYear = useMemo(() => currentSchoolYear(), []);
   const [goal, setGoal] = useState<number | "">(settings?.yearGoal ?? "");
-  const [schoolYear, setSchoolYear] = useState<string>(
-    settings?.schoolYear ?? defaultYear
-  );
+  const [schoolYear, setSchoolYear] = useState<string>(settings?.schoolYear ?? defaultYear);
 
-  // Keep local state in sync when settings load
-  if (goal === "" && settings?.yearGoal && goal !== settings.yearGoal) {
-    // setState in render is usually bad; guard with simple heuristic
-    setGoal(settings.yearGoal);
-  }
-  if (settings?.schoolYear && settings.schoolYear !== schoolYear) {
-    setSchoolYear(settings.schoolYear);
-  }
+  // Sync local inputs when settings change
+  useEffect(() => {
+    if (settings?.yearGoal !== undefined) setGoal(settings.yearGoal);
+    if (settings?.schoolYear) setSchoolYear(settings.schoolYear);
+  }, [settings?.yearGoal, settings?.schoolYear]);
 
   const canSave = typeof goal === "number" && goal > 0 && schoolYear.length > 0;
 
@@ -70,4 +65,3 @@ export default function GoalSetter() {
     </div>
   );
 }
-

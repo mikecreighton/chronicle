@@ -77,3 +77,18 @@ export const remove = mutation({
   },
 });
 
+export const reorder = mutation({
+  args: {
+    updates: v.array(
+      v.object({
+        id: v.id("books"),
+        order: v.number(),
+      })
+    ),
+  },
+  handler: async (ctx, { updates }) => {
+    for (const { id, order } of updates) {
+      await ctx.db.patch(id, { order });
+    }
+  },
+});
