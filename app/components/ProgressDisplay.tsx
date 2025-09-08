@@ -16,8 +16,8 @@ export default function ProgressDisplay({
       </div>
       <div className="h-3 rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-[width] duration-300"
-          style={{ width: `${percent}%` }}
+          className="h-full transition-[width] duration-300"
+          style={{ width: `${percent}%`, backgroundColor: "var(--accent-completed)" }}
         />
       </div>
     </div>

@@ -35,7 +35,7 @@ export default function BookCard({
           : book.status === "reading"
           ? "book--reading"
           : "book--planned"
-      } ${dragging ? "ring-2 ring-sky-400/70" : ""}`}
+      } ${dragging ? "ring-2 ring-[var(--accent-primary)]" : ""}`}
     >
       <div className="flex items-center gap-3 min-w-0">
         <button
@@ -47,19 +47,21 @@ export default function BookCard({
           <span aria-hidden>⠿</span>
         </button>
         <span
-          className={`inline-block h-2.5 w-2.5 rounded-full ${
-            book.status === "completed"
-              ? "bg-emerald-500"
-              : book.status === "reading"
-              ? "bg-sky-500"
-              : "bg-slate-400"
-          }`}
+          className={`inline-block h-2.5 w-2.5 rounded-full`}
+          style={{
+            backgroundColor:
+              book.status === "completed"
+                ? "var(--accent-completed)"
+                : book.status === "reading"
+                ? "var(--accent-reading)"
+                : "var(--accent-planned)",
+          }}
         />
         {editing ? (
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="px-2 py-1.5 rounded-md border border-slate-300 dark:border-slate-700 bg-background text-foreground text-base min-w-0 w-56 focus:outline-none focus:ring-2 focus:ring-sky-500/60"
+            className="px-2 py-1.5 rounded-md border border-slate-300 dark:border-slate-700 bg-background text-foreground text-base min-w-0 w-56 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
             placeholder="Book title"
             autoFocus
             onKeyDown={async (e) => {
@@ -103,7 +105,7 @@ export default function BookCard({
         )}
         {book.status === "reading" && (
           <button
-            className="btn bg-emerald-600 text-white hover:bg-emerald-500"
+            className="btn-success"
             onClick={() => update({ id: book._id as any, status: "completed" })}
           >
             Finished!

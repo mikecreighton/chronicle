@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --surface: #f8fafc;
-  --surface-muted: #eef2f7;
-  --accent-primary: #7c6fff; /* indigo */
-  --accent-reading: #38bdf8; /* sky 400 */
-  --accent-completed: #22c55e; /* emerald 500 */
-  --accent-planned: #94a3b8; /* slate 400 */
+  /* Solarized Light */
+  --background: #fdf6e3; /* base3 */
+  --foreground: #657b83; /* base00 */
+  --surface: #eee8d5;    /* base2 */
+  --surface-muted: #e6dfc9;
+  --accent-primary: #268bd2;   /* blue */
+  --accent-reading: #268bd2;   /* blue */
+  --accent-completed: #859900; /* green */
+  --accent-planned: #93a1a1;   /* base1 */
+  --accent-danger: #dc322f;    /* red */
 }
 
 @theme inline {
@@ -20,22 +22,23 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --surface: #0f172a;
-    --surface-muted: #0b1220;
-    --accent-primary: #7c6fff;
-    --accent-reading: #0ea5e9; /* sky 500 */
-    --accent-completed: #22c55e; /* emerald 500 */
-    --accent-planned: #64748b; /* slate 500 */
+    /* Solarized Dark */
+    --background: #002b36;    /* base03 */
+    --foreground: #93a1a1;    /* base1 */
+    --surface: #073642;       /* base02 */
+    --surface-muted: #042027; /* deeper */
+    --accent-primary: #268bd2;   /* blue */
+    --accent-reading: #268bd2;   /* blue */
+    --accent-completed: #859900; /* green */
+    --accent-planned: #586e75;   /* base01 */
+    --accent-danger: #dc322f;    /* red */
   }
 }
 
 body {
   color: var(--foreground);
   background:
-    radial-gradient(1200px 800px at -10% -10%, color-mix(in oklab, var(--accent-primary) 10%, transparent), transparent),
-    radial-gradient(900px 600px at 110% 10%, color-mix(in oklab, var(--accent-reading) 10%, transparent), transparent),
+    radial-gradient(900px 600px at 0% -10%, color-mix(in oklab, var(--accent-primary) 10%, transparent), transparent),
     var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -45,16 +48,27 @@ body {
   @apply rounded-xl border border-slate-200/60 dark:border-slate-800/60 bg-[var(--surface)] dark:bg-slate-900/40 p-4 shadow-sm;
 }
 @utility btn {
-  @apply inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  --tw-ring-color: var(--accent-primary);
 }
 @utility btn-primary {
-  @apply btn bg-sky-600 text-white hover:bg-sky-500;
+  @apply btn text-white hover:brightness-110 active:brightness-95;
+  background-color: var(--accent-primary);
+}
+@utility btn-success {
+  @apply btn text-white hover:brightness-110 active:brightness-95;
+  background-color: var(--accent-completed);
 }
 @utility btn-muted {
-  @apply btn bg-slate-200 text-slate-900 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600;
+  @apply btn hover:brightness-105;
+  color: var(--foreground);
+  opacity: 0.9;
+  background-color: color-mix(in oklab, var(--accent-planned) 18%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent-planned) 28%, transparent);
 }
 @utility btn-danger {
-  @apply btn bg-rose-600 text-white hover:bg-rose-500;
+  @apply btn text-white hover:brightness-110 active:brightness-95;
+  background-color: var(--accent-danger);
 }
 @utility badge {
   @apply inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border border-slate-300/60 dark:border-slate-700/60 bg-slate-200/60 dark:bg-slate-800/60;
@@ -62,7 +76,7 @@ body {
 
 /* Book card styling with a playful "spine" accent */
 @utility book-card {
-  @apply card flex items-center justify-between rounded-2xl p-4 transition-colors overflow-hidden;
+  @apply card flex items-center justify-between rounded-2xl p-4 transition-all overflow-hidden;
   position: relative;
 }
 @utility book--planned {
@@ -77,9 +91,9 @@ body {
 
 .book-card {
   background:
-    linear-gradient(90deg, color-mix(in oklab, var(--book-accent) 12%, transparent) 0%, transparent 22%),
+    linear-gradient(90deg, color-mix(in oklab, var(--book-accent) 14%, transparent) 0%, transparent 22%),
     var(--surface);
-  border-color: color-mix(in oklab, var(--book-accent) 18%, rgb(51 65 85 / 0.35));
+  border-color: color-mix(in oklab, var(--book-accent) 28%, rgb(51 65 85 / 0.35));
 }
 .dark .book-card {
   background:
@@ -91,8 +105,8 @@ body {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
-  width: 8px;
-  background: linear-gradient(180deg, color-mix(in oklab, var(--book-accent) 55%, white) 0%, var(--book-accent) 100%);
+  width: 6px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--book-accent) 65%, white) 0%, var(--book-accent) 100%);
   opacity: 0.9;
 }
 .book-card:hover { filter: saturate(1.1); }

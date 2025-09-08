@@ -23,7 +23,7 @@ export default function EmptySlot() {
   return (
     <div className="card flex items-center gap-2">
       <input
-        className="flex-1 px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base focus:outline-none focus:ring-2 focus:ring-sky-500/60"
+        className="flex-1 px-2 py-1.5 rounded-md bg-background text-foreground border border-slate-300 dark:border-slate-700 text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
         value={title}
         placeholder="Book title"
         onChange={(e) => setTitle(e.target.value)}
