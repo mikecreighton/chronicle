@@ -2,10 +2,11 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { Id } from "@/convex/_generated/dataModel";
 import BookCard from "./BookCard";
 
 type Book = {
-  _id: string;
+  _id: Id<"books">;
   title: string;
   status: "planned" | "reading" | "completed";
   order: number;

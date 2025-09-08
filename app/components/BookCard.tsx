@@ -2,10 +2,13 @@
 
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import { useState, useRef, useEffect } from "react";
+import type { DraggableAttributes } from "@dnd-kit/core";
+import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 type Book = {
-  _id: string;
+  _id: Id<"books">;
   title: string;
   status: "planned" | "reading" | "completed";
   order: number;
@@ -19,7 +22,7 @@ export default function BookCard({
   dragging,
 }: {
   book: Book;
-  dragHandleProps?: { attributes?: any; listeners?: any };
+  dragHandleProps?: { attributes?: DraggableAttributes; listeners?: SyntheticListenerMap };
   dragging?: boolean;
 }) {
   const update = useMutation(api.books.update);
@@ -40,7 +43,7 @@ export default function BookCard({
     const statusOrder: Array<"planned" | "reading" | "completed"> = ["planned", "reading", "completed"];
     const currentIndex = statusOrder.indexOf(book.status);
     const nextStatus = statusOrder[(currentIndex + 1) % statusOrder.length];
-    update({ id: book._id as any, status: nextStatus });
+    update({ id: book._id, status: nextStatus });
   };
 
   // Handle context menu (desktop)
@@ -160,7 +163,7 @@ export default function BookCard({
               onClick={(e) => e.stopPropagation()}
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
-                  await update({ id: book._id as any, title });
+                  await update({ id: book._id, title });
                   setEditing(false);
                 }
                 if (e.key === "Escape") {
@@ -169,7 +172,7 @@ export default function BookCard({
                 }
               }}
               onBlur={async () => {
-                if (title !== book.title) await update({ id: book._id as any, title });
+                if (title !== book.title) await update({ id: book._id, title });
                 setEditing(false);
               }}
             />
@@ -208,7 +211,7 @@ export default function BookCard({
           <button
             className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
             onClick={() => {
-              update({ id: book._id as any, status: "planned" });
+              update({ id: book._id, status: "planned" });
               setShowContextMenu(false);
             }}
           >
@@ -218,7 +221,7 @@ export default function BookCard({
           <button
             className="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             onClick={() => {
-              remove({ id: book._id as any });
+              remove({ id: book._id });
               setShowContextMenu(false);
             }}
           >

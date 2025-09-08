@@ -22,7 +22,8 @@ import {
 } from "@dnd-kit/sortable";
 
 export default function BookList() {
-  const serverBooks = useQuery(api.books.list) ?? [];
+  const serverBooksRaw = useQuery(api.books.list);
+  const serverBooks = useMemo(() => serverBooksRaw ?? [], [serverBooksRaw]);
   const settings = useQuery(api.settings.getSettings);
   const reorder = useMutation(api.books.reorder);
 
@@ -45,8 +46,8 @@ export default function BookList() {
     // if ids match, we still may want to sync field updates
     let fieldsDiffer = false;
     for (let i = 0; i < ordered.length; i++) {
-      const a = ordered[i] as any;
-      const b = serverBooks[i] as any;
+      const a = ordered[i];
+      const b = serverBooks[i];
       if (
         a.title !== b.title ||
         a.status !== b.status ||
@@ -93,7 +94,7 @@ export default function BookList() {
     const moved = arrayMove(ordered, oldIndex, newIndex);
     setOrdered(moved);
     setIsReordering(true);
-    const updates = moved.map((b, i) => ({ id: b._id as any, order: i + 1 }));
+    const updates = moved.map((b, i) => ({ id: b._id, order: i + 1 }));
     void reorder({ updates });
   }
 
@@ -104,7 +105,7 @@ export default function BookList() {
       <div className="flex flex-col gap-3">
         <SortableContext items={ids} strategy={verticalListSortingStrategy}>
           {ordered.map((b) => (
-            <DraggableBook key={b._id} book={b as any} />
+            <DraggableBook key={b._id} book={b} />
           ))}
         </SortableContext>
         {Array.from({ length: placeholders }).map((_, i) => (
